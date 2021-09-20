@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-back-drop bg-no-repeat">
+  <div class="h-screen bg-back-drop bg-no-repeat bg-customVeryLightGrayishBlue">
     <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> -->
     <router-view />
