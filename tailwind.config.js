@@ -1,6 +1,6 @@
 module.exports = {
   purge: ["./src/**/*.html", "./src/**/*.js"],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -21,7 +21,10 @@ module.exports = {
         darkVeryDarkGrayishBlueHover: "hsl(237, 14%, 26%)",
       },
       fontFamily: {
-        josefin: ['"Josefin Sans"', "sans-serif"],
+        josefin: "'Josefin Sans', 'sans-serif'",
+      },
+      backgroundImage: {
+        // "back-drop": "url('/src/assets/images/bg-mobile-light.jpg')",
       },
     },
   },

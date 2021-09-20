@@ -1,18 +1,31 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="py-12 px-6">
+    <div class="flex justify-between items-center mb-10">
+      <h1
+        class="uppercase text-white font-bold text-2xl"
+        style="letter-spacing: 0.5em"
+      >
+        todo
+      </h1>
+      <img
+        class="h-5"
+        role="button"
+        src="../assets/images/icon-moon.svg"
+        alt="moon display for dark mode"
+      />
+    </div>
+    <create-to-do />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import CreateToDo from "@/components/createToDo.vue";
 
 export default defineComponent({
   name: "Home",
   components: {
-    HelloWorld,
+    CreateToDo,
   },
 });
 </script>
