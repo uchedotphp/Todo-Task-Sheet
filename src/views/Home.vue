@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12 px-6">
+  <div class="py-12 px-8">
     <div class="flex justify-between items-center mb-10">
       <h1
         class="uppercase text-white font-bold text-2xl"
@@ -20,7 +20,7 @@
       <create-to-do />
 
       <!-- todo items parent card -->
-      <div class="rounded-md bg-white h-40 px-5 shadow-xl"></div>
+      <to-do-list-card />
 
       <!-- todos status filter -->
       <to-do-status-filter-card />
@@ -37,12 +37,14 @@
 import { defineComponent } from "vue";
 import CreateToDo from "@/components/createToDo.vue";
 import ToDoStatusFilterCard from "@/components/toDoStatusFilterCard.vue";
+import ToDoListCard from "@/components/toDoListCard.vue";
 
 export default defineComponent({
   name: "Home",
   components: {
     CreateToDo,
     ToDoStatusFilterCard,
+    ToDoListCard,
   },
 });
 </script>
