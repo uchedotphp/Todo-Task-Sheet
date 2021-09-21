@@ -18,7 +18,7 @@
       >
     </div>
     <form
-      @submit="submit"
+      @submit.prevent="createToDo"
       :class="[
         isMaxInputCount ? 'border-red-600' : 'border-transparent',
         'bg-white rounded-md py-4 pl-5 pr-2 flex border-2 dark:bg-darkVeryDarkDesaturatedBlue',
@@ -38,12 +38,13 @@
         placeholder="Create a new todo..."
       />
       <button
+        type="submit"
         :class="[
           showOptionalDetails ? 'block' : 'hidden',
           'bg-green-200 p-1 text-xs tracking-tighter w-20 shadow-md',
         ]"
       >
-        Push enter
+        Create
       </button>
     </form>
   </div>
@@ -51,10 +52,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
+import { useStore } from "vuex";
+import { TodosPayload } from "../types";
 
 export default defineComponent({
   name: "CreateToDo",
   setup() {
+    const store = useStore();
     const todo = ref("" as string);
     const allowedMaxTextCharacterCount = 100 as number;
     const showOptionalDetails = computed((): boolean =>
@@ -65,7 +69,14 @@ export default defineComponent({
       Boolean(todo.value.length === allowedMaxTextCharacterCount)
     );
     function clearInput() {
-      todo.value = "" as string;
+      todo.value = "";
+    }
+    function createToDo() {
+      store.commit("todos/CREATE_TODO", {
+        title: todo.value,
+        completed: false,
+      } as TodosPayload);
+      todo.value = "";
     }
     return {
       todo,
@@ -74,6 +85,7 @@ export default defineComponent({
       clearInput,
       isMaxInputCount,
       allowedMaxTextCharacterCount,
+      createToDo,
     };
   },
 });
