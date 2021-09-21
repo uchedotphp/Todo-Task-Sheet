@@ -1,5 +1,15 @@
 <template>
-  <div class="rounded-md bg-white py-4 px-5 text-gray-500 flex">
+  <div
+    class="
+      rounded-md
+      bg-white
+      py-4
+      px-5
+      text-gray-500
+      flex
+      dark:bg-darkVeryDarkDesaturatedBlue
+    "
+  >
     <div class="mx-auto space-x-5 font-semibold">
       <span class="text-blue-700">All</span>
       <span class="">Active</span>

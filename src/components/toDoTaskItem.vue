@@ -4,12 +4,17 @@
       <button
         :class="[
           selected
-            ? 'bg-pink-300 bg-gradient-to-tl from-purple-900 border'
-            : 'bg-white border-gray-300 border',
+            ? 'bg-pink-300 bg-gradient-to-tl from-purple-900'
+            : 'bg-white border-gray-300 dark:border-gray-600 border dark:bg-transparent',
           'relative w-6 h-6 flex items-center justify-center rounded-full',
         ]"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9">
+        <svg
+          v-if="selected"
+          xmlns="http://www.w3.org/2000/svg"
+          width="11"
+          height="9"
+        >
           <path
             fill="none"
             stroke="#FFF"
@@ -21,7 +26,7 @@
       <p
         :class="[
           selected ? 'line-through text-gray-300' : 'text-gray-600',
-          'truncate w-64 text-sm ',
+          'truncate w-64 text-sm dark:text-gray-300',
         ]"
       >
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum esse
@@ -48,7 +53,7 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   setup() {
-    const selected = ref(false as boolean);
+    const selected = ref(true as boolean);
     return {
       selected,
     };

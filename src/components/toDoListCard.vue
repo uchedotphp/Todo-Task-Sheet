@@ -1,7 +1,13 @@
 <template>
-  <div class="rounded-md bg-white shadow-xl">
+  <div
+    class="rounded-md bg-white shadow-xl dark:bg-darkVeryDarkDesaturatedBlue"
+  >
     <!-- single todo item -->
-    <to-do-task-item class="border-b" v-for="t in 5" :key="t" />
+    <to-do-task-item
+      class="border-b dark:border-gray-700"
+      v-for="t in 5"
+      :key="t"
+    />
 
     <!-- current status -->
     <div class="p-5 flex justify-between text-gray-500">

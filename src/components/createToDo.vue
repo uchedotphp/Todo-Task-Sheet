@@ -13,7 +13,7 @@
       >
         Clear input
       </button>
-      <small :class="{ 'text-red-600': isMaxInputCount }"
+      <small :class="[isMaxInputCount ? 'text-red-600' : 'dark:text-white']"
         >{{ textInputCount }}/{{ allowedMaxTextCharacterCount }}</small
       >
     </div>
@@ -21,14 +21,20 @@
       @submit="submit"
       :class="[
         isMaxInputCount ? 'border-red-600' : 'border-transparent',
-        'bg-white rounded-md py-4 pl-5 pr-2 flex border-2',
+        'bg-white rounded-md py-4 pl-5 pr-2 flex border-2 dark:bg-darkVeryDarkDesaturatedBlue',
       ]"
     >
       <textarea
         :maxlength="allowedMaxTextCharacterCount"
         v-model="todo"
         rows="1"
-        class="focus:outline-none w-full pr-4 mr-auto"
+        class="
+          focus:outline-none
+          w-full
+          pr-4
+          mr-auto
+          dark:bg-darkVeryDarkDesaturatedBlue dark:text-white
+        "
         placeholder="Create a new todo..."
       />
       <button
