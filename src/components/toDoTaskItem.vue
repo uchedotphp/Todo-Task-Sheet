@@ -2,15 +2,16 @@
   <div class="px-5 py-4 flex items-center justify-between">
     <div class="flex items-center space-x-3">
       <button
+        @click="markItem(todo.index)"
         :class="[
-          selected
+          todo.completed
             ? 'bg-pink-300 bg-gradient-to-tl from-purple-900'
             : 'bg-white border-gray-300 dark:border-gray-600 border dark:bg-transparent',
           'relative w-6 h-6 flex items-center justify-center rounded-full',
         ]"
       >
         <svg
-          v-if="selected"
+          v-if="todo.completed"
           xmlns="http://www.w3.org/2000/svg"
           width="11"
           height="9"
@@ -25,21 +26,11 @@
       </button>
       <p
         :class="[
-          selected ? 'line-through text-gray-300' : 'text-gray-600',
-          'truncate w-64 text-sm dark:text-gray-300',
+          todo.completed ? 'line-through text-gray-300' : 'text-gray-600',
+          'truncate w-64 text-sm dark:text-gray-300 capitalize',
         ]"
       >
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum esse
-        quisquam tempora magni illo? Nesciunt mollitia facilis nulla modi
-        quisquam suscipit quos quod quas, quia possimus doloribus explicabo
-        corporis impedit et, praesentium a? Accusantium, quibusdam vel
-        blanditiis ipsum vitae accusamus cupiditate, earum sed quia itaque quo
-        maiores fugit corporis delectus tempore rem? Minus deserunt ut id
-        officiis nostrum quaerat suscipit corrupti libero, incidunt doloribus
-        sequi illum perspiciatis quod autem culpa ab quisquam placeat nam
-        tempore assumenda nisi impedit. Repellat minima, laudantium rerum ab
-        perferendis esse? Quisquam, illum reiciendis. Id cumque officiis sint
-        dignissimos iste labore quam ratione accusantium consequatur quas.
+        {{ todo.title }}
       </p>
     </div>
     <button class="focus:outline-none">
@@ -49,13 +40,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
+  props: {
+    todo: {
+      type: Object,
+    },
+  },
   setup() {
-    const selected = ref(true as boolean);
+    const store = useStore();
+    function markItem(index: number): void {
+      store.commit("todos/MARK_TODO", index);
+    }
     return {
-      selected,
+      markItem,
     };
   },
 });

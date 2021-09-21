@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import todos from "@/store/modules/todos";
 
 export default createStore({
   state: () => ({
@@ -10,7 +11,9 @@ export default createStore({
     },
   },
   actions: {},
-  modules: {},
+  modules: {
+    todos,
+  },
   getters: {
     stateOfDarkTheme: (state) => state.darkTheme,
   },
