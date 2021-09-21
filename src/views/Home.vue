@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12 px-8">
+  <div class="py-12 px-8" :class="{ dark: isDarkThemeOn }">
     <div class="flex justify-between items-center mb-10">
       <h1
         class="uppercase text-white font-bold text-2xl"
@@ -8,6 +8,16 @@
         todo
       </h1>
       <img
+        v-if="isDarkThemeOn"
+        @click="toggle"
+        class="h-5"
+        role="button"
+        src="../assets/images/icon-sun.svg"
+        alt="sun display for light mode"
+      />
+      <img
+        v-else
+        @click="toggle"
         class="h-5"
         role="button"
         src="../assets/images/icon-moon.svg"
@@ -34,7 +44,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 import CreateToDo from "@/components/createToDo.vue";
 import ToDoStatusFilterCard from "@/components/toDoStatusFilterCard.vue";
 import ToDoListCard from "@/components/toDoListCard.vue";
@@ -45,6 +56,17 @@ export default defineComponent({
     CreateToDo,
     ToDoStatusFilterCard,
     ToDoListCard,
+  },
+  setup() {
+    const store = useStore();
+    const isDarkThemeOn = computed(() => store.getters.stateOfDarkTheme);
+    function toggle(): void {
+      store.commit("TOGGLE_THEME");
+    }
+    return {
+      isDarkThemeOn,
+      toggle,
+    };
   },
 });
 </script>
