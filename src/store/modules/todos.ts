@@ -23,7 +23,7 @@ const todos = {
         return;
       }
       const status = payload === "uncompleted" ? false : true;
-      const selectedTasks = [] as number[]
+      const selectedTasks = [] as number[];
       state.todos.forEach((t, index) => {
         if (t.completed === status) {
           selectedTasks.push(index);
