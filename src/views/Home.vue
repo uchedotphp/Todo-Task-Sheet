@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12 px-8" :class="{ dark: isDarkThemeOn }">
+  <div class="py-12 px-8 max-w-md mx-auto" :class="{ dark: isDarkThemeOn }">
     <div class="flex justify-between items-center mb-10">
       <h1
         class="uppercase text-white font-bold text-2xl"
