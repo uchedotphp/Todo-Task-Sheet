@@ -10,7 +10,8 @@
 - Writing clean component-based "non-hacky" SCSS.
 - Clean Readable Codebase.
 - Vue3 Composition Api use.
-- Vuex 4.x implementation
+- Vuex 4.x implementation.
+- JAMSTACK.
 
 **Possibilities of the app:**
 
