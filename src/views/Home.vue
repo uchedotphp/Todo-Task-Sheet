@@ -30,10 +30,10 @@
       <create-to-do />
 
       <!-- todo items parent card -->
-      <to-do-list-card />
+      <to-do-list-card :status="statusCard" />
 
       <!-- todos status filter -->
-      <to-do-status-filter-card />
+      <to-do-status-filter-card @changeStat="setStatusCard($event)" />
     </div>
     <div class="fixed bottom-16 text-center right-0 left-0">
       <b class="text-gray-500 font-normal text-sm">
@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import CreateToDo from "@/components/createToDo.vue";
 import ToDoStatusFilterCard from "@/components/toDoStatusFilterCard.vue";
@@ -58,14 +58,20 @@ export default defineComponent({
     ToDoListCard,
   },
   setup() {
+    const statusCard = ref("all");
     const store = useStore();
     const isDarkThemeOn = computed(() => store.getters.stateOfDarkTheme);
     function toggle(): void {
       store.commit("TOGGLE_THEME");
     }
+    function setStatusCard(e: string): void {
+      statusCard.value = e;
+    }
     return {
+      setStatusCard,
       isDarkThemeOn,
       toggle,
+      statusCard,
     };
   },
 });

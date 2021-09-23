@@ -2,6 +2,7 @@
 node_modules
 /dist
 /design-guide
+/todo-strapi
 
 
 # local env files

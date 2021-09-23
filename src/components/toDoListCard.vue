@@ -3,10 +3,10 @@
     class="rounded-md bg-white shadow-xl dark:bg-darkVeryDarkDesaturatedBlue"
   >
     <!-- single todo item -->
-    <template v-if="todos.length">
+    <template v-if="fetchStatusTodo.length">
       <to-do-task-item
         class="border-b dark:border-gray-700"
-        v-for="(todo, index) in todos"
+        v-for="(todo, index) in fetchStatusTodo"
         :key="index"
         :todo="{ ...todo, index: index }"
       />
@@ -45,33 +45,93 @@
             d="M176 208h-64a16 16 0 01-16-16v-64a16 16 0 0116-16h64a16 16 0 0116 16v64a16 16 0 01-16 16z"
           />
         </svg>
-        <p class="dark:text-gray-400">No Todos at this time.</p>
+        <p class="dark:text-gray-400">
+          No {{ status === "all" ? "" : status }} todos at this time.
+        </p>
       </div>
     </div>
 
     <!-- current status -->
-    <div v-if="todos.length" class="p-5 flex justify-between text-gray-500">
-      <small :class="{ invisible: !todos.length }"
-        >{{ todos.length }} item{{ todos.length > 1 ? "s" : "" }} left</small
+    <div
+      v-if="fetchStatusTodo.length"
+      class="p-5 flex justify-between text-gray-500"
+    >
+      <small :class="{ invisible: !fetchStatusTodo.length }"
+        >{{ fetchStatusTodo.length }} item{{
+          fetchStatusTodo.length > 1 ? "s" : ""
+        }}
+        left</small
       >
-      <button class="capitalize text-sm">clear completed</button>
+      <button
+        @click="clearSelection()"
+        type="button"
+        class="capitalize text-sm"
+      >
+        clear {{ status }}
+      </button>
     </div>
   </div>
+  <notification
+    :show="notification"
+    @closenotification="closenotification($event)"
+  >
+    <p class="text-sm font-medium text-gray-900 capitalize">
+      {{ todoNotificationTitle }}
+    </p>
+  </notification>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import ToDoTaskItem from "@/components/toDoTaskItem.vue";
+import Notification from "./utils/notification.vue";
+
 export default defineComponent({
   name: "ToDoListCard",
+  props: {
+    status: {
+      type: String,
+      default: "all",
+    },
+  },
   components: {
     ToDoTaskItem,
+    Notification,
   },
-  setup() {
+  setup(props) {
+    const notification = ref(false as boolean);
+    const todoNotificationTitle = ref("");
     const store = useStore();
     const todos = computed(() => store.getters["todos/todos"]);
-    return { todos };
+    const fetchStatusTodo = computed(() => {
+      if (props.status === "all") {
+        return todos.value;
+      } else if (props.status === "uncompleted") {
+        return todos.value.filter(
+          (todo: { title: string; completed: boolean }) => !todo.completed
+        );
+      } else {
+        return todos.value.filter(
+          (todo: { title: string; completed: boolean }) => todo.completed
+        );
+      }
+    });
+    function closenotification(e: boolean): void {
+      notification.value = e;
+    }
+    function clearSelection() {
+      store.commit("todos/CLEAR_TODOS", props.status);
+      notification.value = true;
+      todoNotificationTitle.value = `${props.status} tasks cleared`;
+    }
+    return {
+      fetchStatusTodo,
+      clearSelection,
+      notification,
+      todoNotificationTitle,
+      closenotification,
+    };
   },
 });
 </script>

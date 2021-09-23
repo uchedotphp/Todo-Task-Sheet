@@ -26,36 +26,64 @@
       </button>
       <p
         :class="[
-          todo.completed ? 'line-through text-gray-300' : 'text-gray-600',
+          todo.completed
+            ? 'line-through text-gray-300 dark:text-gray-500'
+            : 'text-gray-600',
           'truncate w-64 text-sm dark:text-gray-300 capitalize',
         ]"
       >
         {{ todo.title }}
       </p>
     </div>
-    <button class="focus:outline-none">
+    <button
+      type="button"
+      @click="deleteToDo(todo.index)"
+      class="focus:outline-none"
+    >
       <img class="w-3" src="../assets/images/icon-cross.svg" alt="" srcset="" />
     </button>
   </div>
+  <notification
+    :show="notification"
+    @closenotification="closenotification($event)"
+  >
+    <p class="text-sm font-medium text-gray-900">{{ todoNotificationTitle }}</p>
+  </notification>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
+import notification from "./utils/notification.vue";
 
 export default defineComponent({
+  components: { notification },
   props: {
     todo: {
       type: Object,
     },
   },
   setup() {
+    const todoNotificationTitle = ref("Item Completed!");
+    const notification = ref(false as boolean);
     const store = useStore();
     function markItem(index: number): void {
       store.commit("todos/MARK_TODO", index);
+      notification.value = true;
+    }
+    function deleteToDo(index: number): void {
+      store.dispatch("todos/deleteSingleTask", index);
+      notification.value = true;
+    }
+    function closenotification(e: boolean): void {
+      notification.value = e;
     }
     return {
       markItem,
+      deleteToDo,
+      notification,
+      closenotification,
+      todoNotificationTitle,
     };
   },
 });

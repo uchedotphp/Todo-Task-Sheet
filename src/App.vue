@@ -12,6 +12,9 @@ import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
+  mounted () {
+    // this.$toasted.show('hello billo')
+  },
   setup() {
     const store = useStore();
     const isDarkThemeOn = computed(() => store.getters.stateOfDarkTheme);

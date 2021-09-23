@@ -11,20 +11,42 @@
     "
   >
     <div class="mx-auto space-x-5 font-semibold">
-      <span class="text-blue-700">All</span>
-      <span class="">Active</span>
-      <span class="">Completed</span>
+      <span
+        role="button"
+        @click.prevent="setStatus('all')"
+        :class="{ 'text-blue-700': currentFilter === 'all' }"
+        >All</span
+      >
+      <span
+        role="button"
+        @click.prevent="setStatus('uncompleted')"
+        :class="{ 'text-blue-700': currentFilter === 'uncompleted' }"
+        >Uncompleted</span
+      >
+      <span
+        role="button"
+        @click.prevent="setStatus('completed')"
+        :class="{ 'text-blue-700': currentFilter === 'completed' }"
+        >Completed</span
+      >
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "ToDoStatusFilterCard",
-  setup() {
-    return {};
+  setup(props, context) {
+    const currentFilter = ref("all");
+    return {
+      currentFilter,
+      setStatus(s: string): void {
+        currentFilter.value = s;
+        context.emit("changeStat", s);
+      },
+    };
   },
 });
 </script>
